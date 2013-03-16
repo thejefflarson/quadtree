@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#define QUADTREE_VERSION "0.0.1"
+#define QUADTREE_VERSION "0.1.0"
 
 #include <stdlib.h>
 #include <math.h>
