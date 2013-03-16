@@ -76,9 +76,19 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
   return insert_(tree, node, old, key);
 }
 
-// NOOP for now
-static quadtree_node_t*
+
+static quadtree_point_t*
 find_(quadtree_node_t* node, double x, double y) {
+  if(quadtree_node_isleaf(node)) {
+    if(node->point->x == x && node->point->y == y)
+      return node->point;
+  } else {
+    quadtree_point_t test;
+    test.x = x;
+    test.y = y;
+    return find_(get_quadrant_(node, &test), x, y);
+  }
+
   return NULL;
 }
 
@@ -132,7 +142,7 @@ quadtree_insert(quadtree_t *tree, double x, double y, void *key) {
   return 1;
 }
 
-quadtree_node_t*
+quadtree_point_t*
 quadtree_search(quadtree_t *tree, double x, double y) {
   return find_(tree->root, x, y);
 }
