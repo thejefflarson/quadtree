@@ -12,7 +12,8 @@
 
 void descent(quadtree_node_t *node){
   if(node->bounds != NULL)
-    printf("{ nw.x:%f, nw.y:%f, se.x:%f, se.y:%f }: ",node->bounds->nw->x, node->bounds->nw->y, node->bounds->se->x, node->bounds->se->y);
+    printf("{ nw.x:%f, nw.y:%f, se.x:%f, se.y:%f }: ", node->bounds->nw->x,
+      node->bounds->nw->y, node->bounds->se->x, node->bounds->se->y);
 }
 
 void ascent(quadtree_node_t *node){
