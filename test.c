@@ -11,15 +11,12 @@
 
 
 void descent(quadtree_node_t *node){
-  printf("[\n");
   if(node->bounds != NULL)
     printf("{ nw.x:%f, nw.y:%f, se.x:%f, se.y:%f }: ",node->bounds->nw->x, node->bounds->nw->y, node->bounds->se->x, node->bounds->se->y);
-  if(node->point != NULL)
-    printf("%f, %f", node->point->x, node->point->y);
 }
 
 void ascent(quadtree_node_t *node){
-  printf("\n]\n");
+  printf("\n");
 }
 
 static void
@@ -83,6 +80,7 @@ test_tree(){
   assert(quadtree_insert(tree, 3.0, 1.1, &val) == 1);
   assert(tree->length == 3);
   assert(quadtree_search(tree, 3.0, 1.1)->x == 3.0);
+  quadtree_walk(tree->root, ascent, descent);
   quadtree_free(tree);
 }
 
