@@ -28,4 +28,4 @@ quadtree_bounds_new(){
   bounds->width  = 0;
   bounds->height = 0;
   return bounds;
-};
+}

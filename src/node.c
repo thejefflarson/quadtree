@@ -70,4 +70,3 @@ quadtree_node_free(quadtree_node_t* node, void (*key_free)(void*)) {
   quadtree_node_reset(node, key_free);
   free(node);
 }
-

@@ -157,5 +157,3 @@ quadtree_walk(quadtree_node_t *root, void (*descent)(quadtree_node_t *node),
   if(root->se != NULL) quadtree_walk(root->se, descent, ascent);
   (*ascent)(root);
 }
-
-
