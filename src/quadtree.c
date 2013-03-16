@@ -150,10 +150,8 @@ quadtree_free(quadtree_t *tree) {
 void
 quadtree_walk(quadtree_node_t *root, void (*descent)(quadtree_node_t *node),
                                      void (*ascent)(quadtree_node_t *node)) {
-  (*descent)(root);
   if(root->nw != NULL) quadtree_walk(root->nw, descent, ascent);
   if(root->ne != NULL) quadtree_walk(root->ne, descent, ascent);
   if(root->sw != NULL) quadtree_walk(root->sw, descent, ascent);
   if(root->se != NULL) quadtree_walk(root->se, descent, ascent);
-  (*ascent)(root);
 }
