@@ -26,6 +26,7 @@ test_node(){
   assert(!quadtree_node_isleaf(node));
   assert(quadtree_node_isempty(node));
   assert(!quadtree_node_ispointer(node));
+  free(node);
 }
 
 static void
