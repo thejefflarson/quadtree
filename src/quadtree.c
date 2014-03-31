@@ -80,7 +80,7 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
 
 static quadtree_point_t*
 find_(quadtree_node_t* node, double x, double y) {
-  if(quadtree_node_isleaf(node)) {
+  if(quadtree_node_isleaf(node)){
     if(node->point->x == x && node->point->y == y)
       return node->point;
   } else if(quadtree_node_ispointer(node)){
@@ -100,15 +100,14 @@ insert_(quadtree_t* tree, quadtree_node_t *root, quadtree_point_t *point, void *
     root->point = point;
     root->key   = key;
     return 1; /* normal insertion flag */
-  }
-  else if(quadtree_node_isleaf(root)){
+  } else if(quadtree_node_isleaf(root)){
     if(root->point->x == point->x && root->point->y == point->y){
       reset_node_(tree, root);
       root->point = point;
       root->key   = key;
       return 2; /* replace insertion flag */
     } else {
-      if(!split_node_(tree, root)) {
+      if(!split_node_(tree, root)){
         return 0; /* failed insertion flag */
       }
       return insert_(tree, root, point, key);
