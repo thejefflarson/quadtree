@@ -101,8 +101,6 @@ insert_(quadtree_t* tree, quadtree_node_t *root, quadtree_point_t *point, void *
     return 1;
   } else if(quadtree_node_isleaf(root)){
     if(root->point->x == point->x && root->point->y == point->y){
-      reset_node_(tree, root);
-      root->point = point;
       root->key   = key;
       return 0;
     } else {
@@ -136,8 +134,14 @@ int
 quadtree_insert(quadtree_t *tree, double x, double y, void *key) {
   quadtree_point_t *point;
   if(!(point = quadtree_point_new(x, y))) return 0;
-  if(!node_contains_(tree->root, point)) return 0;
-  if(!insert_(tree, tree->root, point, key)) return 0;
+  if(!node_contains_(tree->root, point)){
+    quadtree_point_free(point);
+    return 0;
+  }
+  if(!insert_(tree, tree->root, point, key)){
+    quadtree_point_free(point);
+    return 0;
+  }
   tree->length++;
   return 1;
 }

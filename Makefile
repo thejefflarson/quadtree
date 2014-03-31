@@ -16,11 +16,11 @@ build/libquadtree.a: $(OBJ)
 
 bin/test: test.o $(OBJ)
 	mkdir -p bin
-	$(CC) $^ -o $@
+	$(CC) $^ -lm -o $@
 
 bin/benchmark: benchmark.o $(OBJ)
 	mkdir -p bin
-	$(CC) $^ -o $@
+	$(CC) $^ -lm -o $@
 
 clean:
 	rm -fr bin build *.o src/*.o
