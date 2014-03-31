@@ -1,4 +1,5 @@
 #include "quadtree.h"
+#include <stdio.h>
 
 /* private prototypes */
 static int
@@ -17,10 +18,10 @@ get_quadrant_(quadtree_node_t *root, quadtree_point_t *point);
 static int
 node_contains_(quadtree_node_t *outer, quadtree_point_t *it) {
   return outer->bounds != NULL
-      && outer->bounds->nw->x < it->x
-      && outer->bounds->nw->y > it->y
-      && outer->bounds->se->x > it->x
-      && outer->bounds->se->y < it->y;
+      && outer->bounds->nw->x <= it->x
+      && outer->bounds->nw->y >= it->y
+      && outer->bounds->se->x >= it->x
+      && outer->bounds->se->y <= it->y;
 }
 
 static void
@@ -79,10 +80,10 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
 
 static quadtree_point_t*
 find_(quadtree_node_t* node, double x, double y) {
-  if(quadtree_node_isleaf(node)) {
+  if(quadtree_node_isleaf(node)){
     if(node->point->x == x && node->point->y == y)
       return node->point;
-  } else {
+  } else if(quadtree_node_ispointer(node)){
     quadtree_point_t test;
     test.x = x;
     test.y = y;
@@ -92,23 +93,25 @@ find_(quadtree_node_t* node, double x, double y) {
   return NULL;
 }
 
-// cribbed from the google closure library.
+/* cribbed from the google closure library. */
 static int
 insert_(quadtree_t* tree, quadtree_node_t *root, quadtree_point_t *point, void *key) {
-  if(quadtree_node_isempty(root)) {
+  if(quadtree_node_isempty(root)){
     root->point = point;
     root->key   = key;
-    return 1;
+    return 1; /* normal insertion flag */
   } else if(quadtree_node_isleaf(root)){
     if(root->point->x == point->x && root->point->y == point->y){
-      reset_node_(root, key);
-      root->key = key;
-      return 0;
+      reset_node_(tree, root);
+      root->point = point;
+      root->key   = key;
+      return 2; /* replace insertion flag */
     } else {
-      if(!split_node_(tree, root)) return 0;
+      if(!split_node_(tree, root)){
+        return 0; /* failed insertion flag */
+      }
       return insert_(tree, root, point, key);
     }
-    return 1;
   } else if(quadtree_node_ispointer(root)){
     quadtree_node_t* quadrant = get_quadrant_(root, point);
     return quadrant == NULL ? 0 : insert_(tree, quadrant, point, key);
@@ -139,12 +142,13 @@ quadtree_insert(quadtree_t *tree, double x, double y, void *key) {
     quadtree_point_free(point);
     return 0;
   }
-  if(!insert_(tree, tree->root, point, key)){
+  int insert_status;
+  if(!(insert_status = insert_(tree, tree->root, point, key))){
     quadtree_point_free(point);
     return 0;
   }
-  tree->length++;
-  return 1;
+  if (insert_status == 1) tree->length++;
+  return insert_status;
 }
 
 quadtree_point_t*

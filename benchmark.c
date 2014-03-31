@@ -25,6 +25,9 @@ stop() {
 
 static void
 mark_insert(){
+  int fail = 0;
+  int success = 0;
+  int replace = 0;
   int n = nodes;
   int val = 10;
   quadtree_t *tree = quadtree_new(0, 0, 1000, 1000);
@@ -34,10 +37,18 @@ mark_insert(){
   while(n--){
     x = (double) (rand() % 1000);
     y = (double) (rand() % 1000);
-    quadtree_insert(tree, x, y, &val);
+    int status = quadtree_insert(tree, x, y, &val);
+    switch(status){
+      case 0: ++fail; break;
+      case 1: ++success; break;
+      case 2: ++replace; break;
+    }   
   }
   stop();
   printf("  %18s %i\n", "length:", tree->length);
+  printf("  %18s %d\n", "insert success:", success);
+  printf("  %18s %d\n", "insert replace:", replace);
+  printf("  %18s %d\n", "insert fail:", fail);
   quadtree_free(tree);
 }
 
