@@ -101,7 +101,8 @@ insert_(quadtree_t* tree, quadtree_node_t *root, quadtree_point_t *point, void *
     return 1;
   } else if(quadtree_node_isleaf(root)){
     if(root->point->x == point->x && root->point->y == point->y){
-      root->key   = key;
+      reset_node_(root, key);
+      root->key = key;
       return 0;
     } else {
       if(!split_node_(tree, root)) return 0;
