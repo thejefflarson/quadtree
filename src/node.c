@@ -57,8 +57,6 @@ quadtree_node_with_bounds(double minx, double miny, double maxx, double maxy){
   return node;
 }
 
-
-// TODO: actual implementation pg. 298 Cormen
 void
 quadtree_node_free(quadtree_node_t* node, void (*key_free)(void*)) {
   if(node->nw != NULL) quadtree_node_free(node->nw, key_free);
