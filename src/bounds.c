@@ -1,5 +1,16 @@
 #include "quadtree.h"
 
+#ifndef INFINITY
+  // no infinity defined? high chance we are compiling as c89
+  #include <float.h>
+  #include <math.h>
+  #define INFINITY DBL_MAX
+  #define fmin(a,b) (((a)<(b))?(a):(b))
+  #define fmax(a,b) (((a)>(b))?(a):(b))
+#endif
+
+
+
 void
 quadtree_bounds_extend(quadtree_bounds_t *bounds, double x, double y){
   bounds->nw->x = fmin(x, bounds->nw->x);
