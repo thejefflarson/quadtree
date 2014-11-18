@@ -52,6 +52,8 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
   quadtree_node_t *ne;
   quadtree_node_t *sw;
   quadtree_node_t *se;
+  quadtree_point_t *old;
+  void *key;
 
   double x  = node->bounds->nw->x;
   double y  = node->bounds->nw->y;
@@ -69,8 +71,8 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
   node->sw = sw;
   node->se = se;
 
-  quadtree_point_t *old = node->point;
-  void *key   = node->key;
+  old = node->point;
+  key   = node->key;
   node->point = NULL;
   node->key   = NULL;
 
@@ -137,12 +139,14 @@ quadtree_new(double minx, double miny, double maxx, double maxy) {
 int
 quadtree_insert(quadtree_t *tree, double x, double y, void *key) {
   quadtree_point_t *point;
+  int insert_status;
+
   if(!(point = quadtree_point_new(x, y))) return 0;
   if(!node_contains_(tree->root, point)){
     quadtree_point_free(point);
     return 0;
   }
-  int insert_status;
+  
   if(!(insert_status = insert_(tree, tree->root, point, key))){
     quadtree_point_free(point);
     return 0;
