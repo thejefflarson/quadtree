@@ -82,6 +82,9 @@ split_node_(quadtree_t *tree, quadtree_node_t *node){
 
 static quadtree_point_t*
 find_(quadtree_node_t* node, double x, double y) {
+  if(!node){
+    retrun NULL;
+  }
   if(quadtree_node_isleaf(node)){
     if(node->point->x == x && node->point->y == y)
       return node->point;
