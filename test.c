@@ -6,19 +6,13 @@
 #define test(fn) \
         printf("\x1b[33m" # fn "\x1b[0m "); \
         test_##fn(); \
-        puts("\x1b[1;32m ✓ \x1b[0m");
+        puts("\x1b[1;32m✓\x1b[0m");
 
 
 
-void descent(quadtree_node_t *node){
-  if(node->bounds != NULL)
-    printf("{ nw.x:%f, nw.y:%f, se.x:%f, se.y:%f }: ", node->bounds->nw->x,
-      node->bounds->nw->y, node->bounds->se->x, node->bounds->se->y);
-}
+void descent(quadtree_node_t *node){}
 
-void ascent(quadtree_node_t *node){
-  printf("\n");
-}
+void ascent(quadtree_node_t *node){}
 
 static void
 test_node(void){
@@ -96,10 +90,6 @@ test_points(void){
 
 int
 main(int argc, const char *argv[]){
-  printf("\nquadtree_t: %ld\n", sizeof(quadtree_t));
-  printf("quadtree_node_t: %ld\n", sizeof(quadtree_node_t));
-  printf("quadtree_bounds_t: %ld\n", sizeof(quadtree_bounds_t));
-  printf("quadtree_point_t: %ld\n", sizeof(quadtree_point_t));
   test(tree);
   test(node);
   test(bounds);
