@@ -33,7 +33,7 @@ quadtree_node_reset(quadtree_node_t* node, void (*key_free)(void*)) {
 
 /* api */
 quadtree_node_t*
-quadtree_node_new() {
+quadtree_node_new(void) {
   quadtree_node_t *node;
   if(!(node = malloc(sizeof(*node))))
     return NULL;

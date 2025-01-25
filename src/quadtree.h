@@ -47,7 +47,7 @@ quadtree_point_free(quadtree_point_t *point);
 
 
 quadtree_bounds_t*
-quadtree_bounds_new();
+quadtree_bounds_new(void);
 
 void
 quadtree_bounds_extend(quadtree_bounds_t *bounds, double x, double y);
@@ -57,7 +57,7 @@ quadtree_bounds_free(quadtree_bounds_t *bounds);
 
 
 quadtree_node_t*
-quadtree_node_new();
+quadtree_node_new(void);
 
 void
 quadtree_node_free(quadtree_node_t *node, void (*value_free)(void*));

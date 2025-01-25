@@ -3,7 +3,7 @@
 #include "src/quadtree.h"
 
 static void
-bench(void (*bm)(), char *label){
+bench(void (*bm)(void), char *label){
   printf(" %18s", label);
   fflush(stdout);
   bm();
@@ -13,18 +13,18 @@ static int nodes = 10000;
 static clock_t startTime;
 
 static void
-start() {
+start(void) {
   startTime = clock();
 }
 
 static void
-stop() {
+stop(void) {
   float duration = (float) (clock() - startTime) / CLOCKS_PER_SEC;
   printf(": \e[32m%.4f\e[0ms\n", duration);
 }
 
 static void
-mark_insert(){
+mark_insert(void){
   int fail = 0;
   int success = 0;
   int replace = 0;
@@ -42,7 +42,7 @@ mark_insert(){
       case 0: ++fail; break;
       case 1: ++success; break;
       case 2: ++replace; break;
-    }   
+    }
   }
   stop();
   printf("  %18s %i\n", "length:", tree->length);

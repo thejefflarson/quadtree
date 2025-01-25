@@ -30,7 +30,7 @@ quadtree_bounds_free(quadtree_bounds_t *bounds){
 
 
 quadtree_bounds_t*
-quadtree_bounds_new(){
+quadtree_bounds_new(void){
   quadtree_bounds_t *bounds;
   if((bounds = malloc(sizeof(*bounds))) == NULL)
     return NULL;

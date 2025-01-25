@@ -21,7 +21,7 @@ void ascent(quadtree_node_t *node){
 }
 
 static void
-test_node(){
+test_node(void){
   quadtree_node_t *node = quadtree_node_new();
   assert(!quadtree_node_isleaf(node));
   assert(quadtree_node_isempty(node));
@@ -30,7 +30,7 @@ test_node(){
 }
 
 static void
-test_bounds(){
+test_bounds(void){
   quadtree_bounds_t *bounds = quadtree_bounds_new();
 
   assert(bounds);
@@ -55,7 +55,7 @@ test_bounds(){
 
 
 static void
-test_tree(){
+test_tree(void){
   int val = 10;
 
   quadtree_t *tree = quadtree_new(1, 1, 10, 10);
@@ -87,7 +87,7 @@ test_tree(){
 }
 
 static void
-test_points(){
+test_points(void){
   quadtree_point_t *point = quadtree_point_new(5, 6);
   assert(point->x == 5);
   assert(point->y == 6);
