@@ -7,6 +7,11 @@ extern "C" {
 
 #define QUADTREE_VERSION "0.0.1"
 
+/* Maximum recursion / tree depth; prevents stack exhaustion from attacker-
+   controlled coordinates.  64 levels comfortably exceeds the ~53 useful
+   splits possible with double-precision coordinates. */
+#define QUADTREE_MAX_DEPTH 64
+
 #include <stdlib.h>
 #include <math.h>
 
